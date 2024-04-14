@@ -5,6 +5,10 @@ using System.Text;
 namespace GCodeSplitter {
 	class MainClass
 	{
+		private static string comment(string v) {
+			return '(' + v.Replace('(', '[').Replace(')', ']') + ')';
+		}
+
 		public static void Main(string[] args)
 		{
 			if (args.Length != 1) {
@@ -19,7 +23,7 @@ namespace GCodeSplitter {
 					while((l = r.ReadLine()) != null) {
 						if (l.Trim().StartsWith("M06", StringComparison.InvariantCultureIgnoreCase)) {
 							w.NextFile();
-							w.Current.WriteLine($"({l})");
+							w.Current.WriteLine(comment(l));
 						} else {
 							w.Current.WriteLine(l);
 						}
